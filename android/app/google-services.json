@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "801610372239",
+    "project_id": "travelgpt-63f42",
+    "storage_bucket": "travelgpt-63f42.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:801610372239:android:cfb1d50accde83b6614cfa",
+        "android_client_info": {
+          "package_name": "com.example.travel_gpt"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCinRW2sZowcPviMP2pMEe24v92YwE90wQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
