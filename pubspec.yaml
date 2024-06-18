@@ -39,8 +39,23 @@ dependencies:
   firebase_core: 
   firebase_auth: 
   cloud_firestore: 
+  firebase_storage:
+
   shared_preferences:
   google_sign_in:
+  intl:
+  firebase_messaging:
+  pinput:
+  image_picker:
+  permission_handler: ^11.3.1
+  cached_network_image:
+  google_maps_flutter: ^2.6.0
+  geolocator: ^11.0.0
+  geocoding: ^3.0.0
+  # sms_autofill:
+  rename: ^3.0.2
+  change_app_package_name: ^1.2.0
+
 
 dev_dependencies:
   flutter_test:

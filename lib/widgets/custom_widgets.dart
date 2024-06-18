@@ -3,11 +3,26 @@ import 'package:flutter/material.dart';
 
 import '../constants/colors.dart';
 
-BoxDecoration boxDecoration(double borderWidth, double borderRadius) {
+LinearGradient AppLinearGradient() {
+  return LinearGradient(colors: [
+    Color.fromARGB(255, 47, 139, 214),
+    Color.fromARGB(255, 23, 107, 175),
+    Color.fromARGB(255, 17, 71, 151)
+  ], begin: Alignment.topCenter, end: Alignment.bottomCenter);
+}
+
+BoxDecoration boxDecoration(Color color) {
   return BoxDecoration(
-    color: white,
-    border: Border.all(width: borderWidth),
-    borderRadius: BorderRadius.circular(borderRadius),
+    color: color,
+    border: Border.all(width: 1, color: grey),
+    borderRadius: BorderRadius.circular(10),
+  );
+}
+
+BoxDecoration boxDecoration1(Color? color, double radius) {
+  return BoxDecoration(
+    color: color,
+    borderRadius: BorderRadius.circular(radius),
   );
 }
 
@@ -37,7 +52,7 @@ TextStyle bTextStyle(double size, Color color) {
   return TextStyle(color: color, fontSize: size, fontWeight: FontWeight.bold);
 }
 
-goto(BuildContext context, Widget nextScreen) {
+goTo(BuildContext context, Widget nextScreen) {
   Navigator.push(context, MaterialPageRoute(builder: (context) => nextScreen));
 }
 
@@ -50,7 +65,7 @@ gotoc(BuildContext context, Widget nextScreen) {
   Navigator.push(context, CupertinoPageRoute(builder: (context) => nextScreen));
 }
 
-gotoWithoutBack(BuildContext context, Widget nextScreen) {
+goToWithoutBack(BuildContext context, Widget nextScreen) {
   Navigator.pushReplacement(
       context, MaterialPageRoute(builder: (context) => nextScreen));
 }
@@ -59,99 +74,76 @@ goBack(BuildContext context) {
   Navigator.of(context).pop();
 }
 
-Widget normalText(String text, double size) {
-  return Text(
-    text,
-    style: TextStyle(fontSize: size,color: black),
+Widget BackButtonW(BuildContext context) {
+  return InkWell(
+    onTap: () {
+      goBack(context);
+    },
+    child: Icon(
+      Icons.arrow_back,
+      size: 20,
+      color: black,
+    ),
   );
 }
 
-Widget boldText(String text, double size) {
+Widget NormalText(String text, double size) {
   return Text(
     text,
-    style: TextStyle(fontSize: size, fontWeight: FontWeight.bold,color: black),
+    style: TextStyle(
+      fontSize: size,
+    ),
   );
 }
 
-Widget veryBoldText(String text, double size) {
+Widget BoldText(String text, double size) {
   return Text(
     text,
-    style: TextStyle(fontSize: size, fontWeight: FontWeight.w900,color: black),
+    style: TextStyle(
+      fontSize: size,
+      fontWeight: FontWeight.bold,
+    ),
+  );
+}
+
+Widget VeryBoldText(String text, double size) {
+  return Text(
+    text,
+    style: TextStyle(fontSize: size, fontWeight: FontWeight.w900),
     textAlign: TextAlign.center,
   );
 }
 
-Widget nAppText(String text, double size, Color? color) {
+Widget NAppText(String text, double size, Color? color) {
   return Text(
     text,
     style: TextStyle(color: color, fontSize: size),
+    textAlign: TextAlign.center,
   );
 }
 
-Widget bAppText(String text, double size, Color? color) {
+Widget BAppText(String text, double size, Color? color) {
   return Text(
     text,
-    style: TextStyle(color: color, fontSize: size, fontWeight: FontWeight.bold),
+    style: TextStyle(color: color, fontSize: size, fontWeight: FontWeight.w900),
   );
 }
 
-showSnackbar(BuildContext context, String content) {
-  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-    backgroundColor:grey2,
-    margin: EdgeInsets.all(15),
-    behavior: SnackBarBehavior.floating,
-    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
-    content: nAppText(content, 15, Colors.black),
-  ));
-}
-
-Widget PrimaryMaterialButton(
-    BuildContext context, Function fun, String buttonText) {
-  return MaterialButton(
-    minWidth: fullWidth(context),
-    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-    height: 45,
-    color: green,
-    onPressed: () {
-      fun();
-    },
-    child: Text(
-      buttonText,
-      style: TextStyle(color: Colors.white, fontSize: 17),
-    ),
-  );
-}
-
-Widget SecondaryMaterialButton(Function fun, String buttonText,
-    double width) {
-  return MaterialButton(
-    minWidth: width,
-    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
-    height: 45,
-    color: green,
-    onPressed: () {
-      fun();
-    },
-    child: Text(
-      buttonText,
-      style: TextStyle(color: white, fontSize: 18),
-    ),
-  );
-}
-
-Widget PrimaryOutlineButton(Function fun, String buttonText, double width) {
+Widget PrimaryOutlineButton(
+  Function fun,
+  String buttonText,
+) {
   return SizedBox(
-    width: width,
-    height: 30,
+    width: 130,
+    height: 35,
     child: OutlinedButton(
       style: OutlinedButton.styleFrom(
         side: BorderSide(color: black),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
       ),
       onPressed: () {
         fun();
       },
-      child: nAppText(buttonText, 16, black),
+      child: NAppText(buttonText, 12, black),
     ),
   );
 }
@@ -160,74 +152,28 @@ Widget PrimaryOutlineButton(Function fun, String buttonText, double width) {
 //   Fluttertoast.showToast(msg: msg, backgroundColor: white, textColor: black);
 // }
 
-showWarningDialog(BuildContext context, String content) {
-  showDialog(
-      context: context,
-      builder: (context) {
-        return AlertDialog(
-          title: Text("Alert"),
-          content: Text(content),
-          actions: [
-            TextButton(
-                onPressed: () {
-                  goBack(context);
-                },
-                child: Text("Ok"))
-          ],
-        );
-      });
-}
-Widget BackButtonW(BuildContext context,IconData icon) {
-  return IconButton(
-      onPressed: () {
-        goBack(context);
-      },
-      icon: Icon(
-        icon,
-        size: 18,
-        color: black,
-        
-      ));
-}
 Widget DrawerItems(IconData icon, String title, Function fun) {
-  return InkWell(
+  return ListTile(
     onTap: () {
       fun();
     },
-    child: Padding(
-      padding: const EdgeInsets.symmetric(vertical: 10),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Row(
-            children: [
-              Icon(
-                icon,
-                color: black,
-                size: 25,
-              ),
-              HSpace(10),
-              boldText(title, 17),
-            ],
-          ),
-          Icon(
-            Icons.arrow_forward_ios,
-            size: 15,
-            color:black,
-          ),
-        ],
-      ),
+    leading: Icon(icon),
+    title: Text(title,style: TextStyle(),textAlign: TextAlign.left,),
+    trailing: Icon(
+      Icons.arrow_forward_ios,
+      size: 15,
+      color: Colors.brown,
     ),
   );
 }
 
-Widget VSpace(double h) {
+Widget VGap(double h) {
   return SizedBox(
     height: h,
   );
 }
 
-Widget HSpace(double w) {
+Widget HGap(double w) {
   return SizedBox(
     width: w,
   );
@@ -245,8 +191,8 @@ Widget VerticalListTile(String title, String content) {
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
-      boldText(title, 16),
-      VSpace(5),
+      BoldText(title, 16),
+      VGap(5),
       Container(
         width: double.infinity,
         decoration: BoxDecoration(
@@ -255,7 +201,7 @@ Widget VerticalListTile(String title, String content) {
         ),
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 10),
-          child: normalText(content, 17),
+          child: NormalText(content, 17),
         ),
       )
     ],
@@ -273,51 +219,6 @@ Widget DefaultImage(double w, double h) {
   );
 }
 
-Widget BestSellerItem(
-    BuildContext context, String name, int price, Color color) {
-  return InkWell(
-    onTap: () {
-      // goto(context, ProductDetailScreen2(name: name, price: price));
-    },
-    child: Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Stack(
-          alignment: Alignment.bottomRight,
-          children: [
-            Container(
-              width: 150,
-              height: 170,
-              color: white,
-            ),
-            Container(
-              width: 45,
-              height: 45,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(100),
-                  // bottomLeft: Radius.circular(20),
-                  // topRight: Radius.circular(10),
-                ),
-                color: color,
-              ),
-              child: Align(
-                alignment: Alignment.centerRight,
-                child: Padding(
-                  padding: const EdgeInsets.only(right: 3),
-                  child: nAppText("\$" + price.toString(), 14, white),
-                ),
-              ),
-            )
-          ],
-        ),
-        VSpace(10),
-        normalText(name, 17)
-      ],
-    ),
-  );
-}
-
 Widget AppName(double size, bool isDark) {
   return Row(
     mainAxisAlignment: MainAxisAlignment.center,
@@ -325,46 +226,23 @@ Widget AppName(double size, bool isDark) {
       CircleAvatar(
         backgroundColor: mc,
         radius: size - 5,
-        child: bAppText("E", size, white),
+        child: NAppText("AI", size, white),
       ),
-      bAppText("state", size, isDark ? white : black)
+      NAppText("haram", size, isDark ? white : black)
     ],
   );
 }
 
-void showSuccessAlertDialog(
-    BuildContext context, String title, String btnText) {
-  showDialog(
-      context: context,
-      builder: (context) {
-        return AlertDialog(
-          content: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                CircleAvatar(
-                  backgroundColor: mc,
-                  radius: 40,
-                  child: Icon(
-                    Icons.done,
-                    size: 50,
-                    color: white,
-                  ),
-                ),
-                VSpace(25),
-                Text(
-                  title,
-                  style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
-                  textAlign: TextAlign.center,
-                ),
-                VSpace(25),
-                PrimaryMaterialButton(context, () {
-                  goBack(context);
-                }, btnText)
-              ],
-            ),
-          ),
-        );
-      });
+
+
+Widget ContainerWithBorder(String text, Color color) {
+  return Container(
+    decoration: BoxDecoration(
+        border: Border.all(color: color),
+        borderRadius: BorderRadius.circular(10)),
+    child: Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+      child: NAppText(text, 15, color),
+    ),
+  );
 }
